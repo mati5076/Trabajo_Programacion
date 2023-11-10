@@ -12,5 +12,11 @@ class Producto:
 
         self.lista_productos = tk.Listbox(self.ventana_product)
         self.lista_productos.pack()
+        def agregar():
+            new_product = self.nombre_producto.get()
+            self.lista_productos.insert(0,new_product)
+            self.lista_productos.delete(tk.END,new_product)
+        self.lista_boton = tk.Button(self.ventana_product, text="Agrega",command=agregar)
+        self.lista_boton.pack()
         
         self.ventana_product.mainloop()

@@ -26,5 +26,4 @@ boton.pack()
 if 'administrador' in registrador:
     pass
 
-
 ventana.mainloop()

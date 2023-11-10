@@ -6,6 +6,5 @@ class Productos:
         self.cantidad = cantidad
         self.estado = estado
 
-
-
+    
 bebidas = Productos("coca" , "nose" , 12500 , 15 , "Sellado")

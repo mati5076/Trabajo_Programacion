@@ -25,10 +25,9 @@ class usuario_sistema:
             password = self.contrasenia.get()
 
             if user in usuarios and password in usuarios[user]:
-                messagebox.showinfo("Inicio" , 'Se inicio secion')
+                messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Producto()
-
         boton_inicio = tk.Button(self.ventana,text='iniciar secion' , command=login)
         boton_inicio.pack()
         boton_inicio.config(bg='green')

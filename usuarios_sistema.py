@@ -28,7 +28,7 @@ class usuario_sistema:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Producto()
-        boton_inicio = tk.Button(self.ventana,text='iniciar secion' , command=login)
+        boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         boton_inicio.pack()
         boton_inicio.config(bg='green')
         self.ventana.mainloop()

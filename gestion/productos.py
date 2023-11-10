@@ -1,5 +1,4 @@
 import tkinter as tk
-from usuarios_sistema import usuario_sistema
 class Producto:
     def __init__(self):
         self.ventana_product = tk.Tk()
@@ -13,7 +12,5 @@ class Producto:
 
         self.lista_productos = tk.Listbox(self.ventana_product)
         self.lista_productos.pack()
-    
-        def cerrar_sesion():
-            pass
+        
         self.ventana_product.mainloop()

@@ -1,32 +1,37 @@
-import tkinter
+import tkinter as tk
 from tkinter import messagebox
-from tkinter import Frame
+from gestion.productos import Producto
+usuarios = {'admin':'123'}
 
+class usuario_sistema:
+    def __init__(self):
+        self.ventana = tk.Tk()
+        self.ventana.geometry("250x250")
 
-users = {'Matias': 'mati12'}
+        self.label_usuario = tk.Label(text="Usuario:")
+        self.label_usuario.pack()
 
-class Usuarios_sistema:
-    def __init__(self,master):
-        self.frame = Frame(master)
-        self.frame.pack()
-        
-        self.usuario = tkinter.Entry()
-        self.usuario.pack()
-        
-        self.password = tkinter.Entry(show='*')
-        self.password.pack()
-        
+        self.usuario_entrada = tk.Entry()
+        self.usuario_entrada.pack()
+
+        self.label_contrasenia = tk.Label(text="Contraseña:")
+        self.label_contrasenia.pack()
+
+        self.contrasenia= tk.Entry(show='*')
+        self.contrasenia.pack()
+
         def login():
-            user = self.usuario.get()
-            contraseña = self.password.get()
-            if user in users and contraseña in users[user]:
-                messagebox.showinfo("inicio secion" , "iniciaste bien")
-            else:messagebox.showerror("Mal","MAL")
-        self.boton = tkinter.Button(root , text="Ingresa", command=login)
-        self.boton.pack()
-        self.boton.config(bg='green')
+            user = self.usuario_entrada.get()
+            password = self.contrasenia.get()
 
-root = tkinter.Tk()
-root.geometry("350x250")
-aplicacion = Usuarios_sistema(root)
-root.mainloop()
+            if user in usuarios and password in usuarios[user]:
+                messagebox.showinfo("Inicio" , 'Se inicio secion')
+                self.ventana.withdraw()
+                Producto()
+
+        boton_inicio = tk.Button(self.ventana,text='iniciar secion' , command=login)
+        boton_inicio.pack()
+        boton_inicio.config(bg='green')
+        self.ventana.mainloop()
+
+usuario_sistema()

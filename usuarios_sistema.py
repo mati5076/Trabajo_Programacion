@@ -7,6 +7,7 @@ class usuario_sistema:
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.geometry("250x250")
+        self.ventana.title("Usuarios/login")
 
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
@@ -23,7 +24,6 @@ class usuario_sistema:
         def login():
             user = self.usuario_entrada.get()
             password = self.contrasenia.get()
-
             if user in usuarios and password in usuarios[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()

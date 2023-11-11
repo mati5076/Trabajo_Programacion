@@ -23,16 +23,20 @@ class Funcionario:
         self.cargo = tk.Entry()
         self.cargo.pack()
 
+        self.empresa_label = tk.Label(text="Empresa")
+        self.empresa_label.pack()
+
         self.empresa = tk.Entry()
         self.empresa.pack()
 
         opcion_contrato = ["plazo fijo","Indefinido"]
         self.tipo = tk.StringVar()
         self.tipo.set(" ")
-
+        
+        self.contrato_label = tk.Label(text="Contrato:")
+        self.contrato_label.pack()
+        
         self.contrato = tk.OptionMenu(self.ventana_funcionario,self.tipo,*opcion_contrato)
         self.contrato.pack()
         self.contrato.config()
         self.ventana_funcionario.mainloop()
-
-Funcionario()

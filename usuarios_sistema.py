@@ -16,7 +16,7 @@ class usuario_sistema:
 
         self.usuario_entrada = tk.Entry()
         self.usuario_entrada.pack()
-        self.usuario_entrada.config(bg='#616161')
+        self.usuario_entrada.config(bg='#616161',font=("Arial",12))
 
         self.label_contrasenia = tk.Label(text="Contraseña:")
         self.label_contrasenia.pack()
@@ -24,7 +24,8 @@ class usuario_sistema:
 
         self.contrasenia= tk.Entry(show='*')
         self.contrasenia.pack()
-        self.contrasenia.config(bg='#616161')
+        #el font es para poder cambiar el tipo de letra y bg es ponerle color al fondo de la entrada de datos
+        self.contrasenia.config(bg='#616161',font=('Arial',12))
 
         def login():
             user = self.usuario_entrada.get()

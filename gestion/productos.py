@@ -30,6 +30,7 @@ class Producto:
                 self.lista_productos.delete(seleccion)
         
         self.boton_borrador = tk.Button(self.ventana_product , text="Borrar", command=borrar)
-        self.boton_borrador.pack()
         self.boton_borrador.config(bg='red')
+        self.boton_borrador.pack()
+
         self.ventana_product.mainloop()

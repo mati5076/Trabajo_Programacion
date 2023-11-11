@@ -6,7 +6,7 @@ usuarios = {'admin':'123'}
 class usuario_sistema:
     def __init__(self):
         self.ventana = tk.Tk()
-        self.ventana.geometry("250x250")
+        self.ventana.geometry("300x200")
         self.ventana.title("Usuarios/login")
         self.ventana.config(bg='#616161')
 
@@ -36,7 +36,7 @@ class usuario_sistema:
                 Producto()
         boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         boton_inicio.pack()
-        boton_inicio.config(bg='green')
+        boton_inicio.config(bg='green',font=('Arial',10))
         self.ventana.mainloop()
 
 usuario_sistema()

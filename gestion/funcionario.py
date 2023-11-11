@@ -26,9 +26,13 @@ class Funcionario:
         self.empresa = tk.Entry()
         self.empresa.pack()
 
-        self.contrato = tk.OptionMenu(text="Fijo" , text="Plazo")
-        self.contrato.pack()
+        opcion_contrato = ["plazo fijo","Indefinido"]
+        self.tipo = tk.StringVar()
+        self.tipo.set(" ")
 
+        self.contrato = tk.OptionMenu(self.ventana_funcionario,self.tipo,*opcion_contrato)
+        self.contrato.pack()
+        self.contrato.config()
         self.ventana_funcionario.mainloop()
 
 Funcionario()

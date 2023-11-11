@@ -8,18 +8,23 @@ class usuario_sistema:
         self.ventana = tk.Tk()
         self.ventana.geometry("250x250")
         self.ventana.title("Usuarios/login")
+        self.ventana.config(bg='#616161')
 
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
+        self.label_usuario.config(bg='#616161')
 
         self.usuario_entrada = tk.Entry()
         self.usuario_entrada.pack()
+        self.usuario_entrada.config(bg='#616161')
 
         self.label_contrasenia = tk.Label(text="Contraseña:")
         self.label_contrasenia.pack()
+        self.label_contrasenia.config(bg='#616161')
 
         self.contrasenia= tk.Entry(show='*')
         self.contrasenia.pack()
+        self.contrasenia.config(bg='#616161')
 
         def login():
             user = self.usuario_entrada.get()

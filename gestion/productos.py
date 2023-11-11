@@ -16,12 +16,13 @@ class Producto:
         def agregar():
             new_product = self.nombre_producto.get()
             if new_product:
-                #inserta
+                #inserta lo que tengo en la entrada y lo coloca en la lista
                 self.lista_productos.insert(tk.END,new_product)
                 #deja en blanco la entrada del producto
                 self.nombre_producto.delete(0,tk.END)
         self.lista_boton = tk.Button(self.ventana_product, text="Agrega",command=agregar)
         self.lista_boton.pack()
+        self.lista_boton.config(bg='yellow')
         def borrar():
             #aqui se selecciona con el cursor lo que se borrara de la lista
             seleccion = self.lista_productos.curselection()

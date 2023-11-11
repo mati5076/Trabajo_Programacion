@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+from gestion.funcionario import Funcionario
 
 class solicitud:
     def __init__(self):
@@ -29,6 +31,12 @@ class solicitud:
         self.fecha_devolucion = tk.Entry()
         self.fecha_devolucion.pack()
 
+        def boton_func():
+           messagebox.showinfo("Hola" , "asdasd")
+           Funcionario()
+
+        self.boton = tk.Button(self.ventan_solicitante, text="preciona" ,command=boton_func) 
+        self.boton.pack()
         self.ventan_solicitante.mainloop()
 
 

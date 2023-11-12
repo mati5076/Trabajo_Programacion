@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from gestion.productos import Producto
 
-usuarios = {'admin':'123'}
+usuarios = {'admin':'123' , 'funcionario' : '123'  , 'gestor' : '123'}
 
 class usuario_sistema:
     def __init__(self):

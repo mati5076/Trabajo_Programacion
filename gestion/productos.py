@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+
 class Producto:
     def __init__(self):
         self.lista_productos_prestamo = ["betonero", "Lijadora concreto", "Placa compactadora"]

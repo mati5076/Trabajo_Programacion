@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
 from gestion.productos import Producto
+
 usuarios = {'admin':'123'}
 
 class usuario_sistema:
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.geometry("300x200")
-        self.ventana.title("Usuarios/login")
+        self.ventana.title("Login")
         self.ventana.config(bg='#616161')
 
         self.label_usuario = tk.Label(text="Usuario:")
@@ -34,9 +35,12 @@ class usuario_sistema:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Producto()
+            else:
+                messagebox.showerror("Error", "El usuario o contraseña esta mal")
+                self.usuario_entrada.delete(0,tk.END)
+                self.contrasenia.delete(0,tk.END)
         boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         boton_inicio.pack()
         boton_inicio.config(bg='green',font=('Arial',10))
-        self.ventana.mainloop()
 
-usuario_sistema()
+        self.ventana.mainloop()

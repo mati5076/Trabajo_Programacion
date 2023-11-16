@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 from gestion.productos import Producto
-
-usuarios = {'admin':'123' , 'funcionario' : '123'  , 'gestor' : '123'}
+from gestion.solicitud import solicitud
+from gestion.funcionario import Funcionario
+administrador = {'administrador':'123'}
+gestor_informe= {'gestor' : '321'}
+client = {'cliente' : '54321'}
 
 class usuario_sistema:
     def __init__(self):
@@ -10,7 +13,7 @@ class usuario_sistema:
         self.ventana.geometry("300x200")
         self.ventana.title("Login")
         self.ventana.config(bg='#616161')
-
+        
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
         self.label_usuario.config(bg='#616161')
@@ -31,10 +34,18 @@ class usuario_sistema:
         def login():
             user = self.usuario_entrada.get()
             password = self.contrasenia.get()
-            if user in usuarios and password in usuarios[user]:
+            if user in administrador and password in administrador[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Producto()
+            if user in gestor_informe and password in gestor_informe[user]:
+                messagebox.showinfo("Inicio" , 'Se inicio sesion')
+                self.ventana.withdraw()
+                solicitud()
+            elif user in client and password in client[user]:
+                messagebox.showinfo("Inicio" , 'Se inicio sesion')
+                self.ventana.withdraw()
+                Funcionario()
             else:
                 messagebox.showerror("Error", "El usuario o contraseña esta mal")
                 self.usuario_entrada.delete(0,tk.END)

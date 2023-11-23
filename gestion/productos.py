@@ -57,7 +57,7 @@ class Producto:
             if encontrar:
                 messagebox.showinfo("Encontro", "Inactivo")
             else:
-                messagebox.showerror("No", "Activo")
+                messagebox.showerror("Ya regreso", "Activo")
 
         self.boton_abrir = tk.Button(self.ventana_product ,text="abrir" ,command=abrir)
         self.boton_abrir.pack()

@@ -40,6 +40,7 @@ class Producto:
         self.atrapar_articulo_prestado = ''
 
         def abrir():
+            #se abre el archivo txt y deja ver si esta activo o no y muestra todos los datos
             archivo = self.nomnbre_txt.get()
             try:
                 with open(f'{archivo}.txt') as arch:
@@ -68,7 +69,6 @@ class Producto:
         self.lista_productos.delete(0, tk.END)
         for producto in self.lista_productos_prestamo:
             self.lista_productos.insert(tk.END, producto)
-
     def agregar(self):
         new_product = self.nombre_producto.get()
         if new_product:

@@ -9,7 +9,7 @@ class solicitud:
         self.nombre_archivo_label.pack()
 
         self.nombre_archivo = tk.Entry(self.ventan_solicitante)
-        self.nombre_archivo.pack()
+        self.nombre_archivo.pack() 
 
         self.nombre_solicitante_label = tk.Label(self.ventan_solicitante,text="Nombre_solicitante")
         self.nombre_solicitante_label.pack()

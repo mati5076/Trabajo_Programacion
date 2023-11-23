@@ -64,4 +64,5 @@ class Funcionario:
                  #boton que ejecuta la funcion de guardar el txt
         self.boton_archivo = tk.Button(self.ventana_funcionario , text="Guarda datos" , command=guardar_txt)
         self.boton_archivo.pack()
+        
         self.ventana_funcionario.mainloop()

@@ -3,12 +3,13 @@ from tkinter import messagebox
 from gestion.productos import Producto
 from gestion.solicitud import solicitud
 from gestion.funcionario import Funcionario
-administrador = {'administrador':'123'}
-gestor_informe= {'gestor' : '321'}
-client = {'cliente' : '54321'}
 
 class usuario_sistema:
     def __init__(self):
+        self.administrador = {'administrador':'123'}
+        self.gestor_informe= {'gestor' : '321'}
+        self.funcionario = {'funcionario' : '54321'}
+        
         self.ventana = tk.Tk()
         self.ventana.geometry("300x200")
         self.ventana.title("Login")
@@ -34,15 +35,15 @@ class usuario_sistema:
         def login():
             user = self.usuario_entrada.get()
             password = self.contrasenia.get()
-            if user in administrador and password in administrador[user]:
+            if user in self.administrador and password in self.administrador[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Producto()
-            if user in gestor_informe and password in gestor_informe[user]:
+            elif user in self.gestor_informe and password in self.gestor_informe[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
-                solicitud()
-            elif user in client and password in client[user]:
+                Producto()
+            elif user in self.funcionario and password in self.funcionario[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
                 Funcionario()

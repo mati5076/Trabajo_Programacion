@@ -3,10 +3,16 @@ from tkinter import messagebox
 
 class Producto:
     def __init__(self):
-        self.lista_productos_prestamo = ["betonero", "Lijadora concreto", "Placa compactadora"]
+        self.lista_productos_prestamo = ["betonero", "Lijadora concreto", "Placa compactadora" , "Martillo" , "bentano"]
         self.ventana_product = tk.Tk()
         self.ventana_product.geometry("350x450")
         self.ventana_product.title("Productos")
+
+        self.entrada = tk.Label(self.ventana_product, text="Nombre archivo")
+        self.entrada.pack()
+
+        self.nomnbre_txt = tk.Entry()
+        self.nomnbre_txt.pack()
 
         self.label_nombre = tk.Label(self.ventana_product, text="Nombre Producto:")
         self.label_nombre.pack()
@@ -31,6 +37,22 @@ class Producto:
         self.cantidad_boton.pack()
         self.cantidad_boton.config(bg='blue')
 
+        self.atrapar_articulo_prestado = ''
+
+        def abrir():
+            archivo = self.nomnbre_txt.get()
+            with open(f'{archivo}.txt') as arch:
+                leer = arch.read()
+                messagebox.showinfo("Lector de archivo", leer)
+            self.atrapar_articulo_prestado = leer[63:75].strip()
+            if self.atrapar_articulo_prestado in self.lista_productos_prestamo: 
+                messagebox.showinfo("Prestamo" , "Esta Incactivo")
+            else:
+                messagebox.showinfo("Prestamo" , "Esta Activo")
+
+        self.boton_abrir = tk.Button(self.ventana_product ,text="abrir" ,command=abrir)
+        self.boton_abrir.pack()
+
         self.ventana_product.mainloop()
     def actualizar(self):
         # Llena la lista de productos en la interfaz con los productos actuales
@@ -46,17 +68,19 @@ class Producto:
             self.actualizar()
             # deja en blanco la entrada del producto
             self.nombre_producto.delete(0, tk.END)
-
+    
     def borrar(self):
         # aqui se selecciona con el cursor lo que se borrara de la lista
-        seleccion = self.lista_productos.curselection()
-        if seleccion:
-            elemento = self.lista_productos.get(seleccion)
-            if elemento in self.lista_productos_prestamo:
-                self.lista_productos_prestamo.remove(elemento)
+            seleccion = self.lista_productos.curselection()
+            if seleccion:
+                elemento = self.lista_productos.get(seleccion)
+                if elemento in self.lista_productos_prestamo:
+                    self.lista_productos_prestamo.remove(elemento)
             self.actualizar()
     def cantidad(self):
         cantidad_productos = len(self.lista_productos_prestamo)
         messagebox.showinfo("Productos" , f' la cantidad de productos es :{cantidad_productos}')
 
 Producto()
+
+

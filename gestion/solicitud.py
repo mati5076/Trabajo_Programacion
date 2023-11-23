@@ -61,3 +61,5 @@ class solicitud:
         self.boton_archivo.pack()
         
         self.ventan_solicitante.mainloop()
+
+solicitud()

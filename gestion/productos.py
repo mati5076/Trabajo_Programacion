@@ -11,7 +11,7 @@ class Producto:
         self.entrada = tk.Label(self.ventana_product, text="Nombre archivo")
         self.entrada.pack()
 
-        self.nomnbre_txt = tk.Entry()
+        self.nomnbre_txt = tk.Entry(self.ventana_product)
         self.nomnbre_txt.pack()
 
         self.label_nombre = tk.Label(self.ventana_product, text="Nombre Producto:")
@@ -41,14 +41,23 @@ class Producto:
 
         def abrir():
             archivo = self.nomnbre_txt.get()
-            with open(f'{archivo}.txt') as arch:
-                leer = arch.read()
-                messagebox.showinfo("Lector de archivo", leer)
-            self.atrapar_articulo_prestado = leer[63:75].strip()
-            if self.atrapar_articulo_prestado in self.lista_productos_prestamo: 
-                messagebox.showinfo("Prestamo" , "Esta Incactivo")
+            try:
+                with open(f'{archivo}.txt') as arch:
+                    leer = arch.read()
+                    messagebox.showinfo("Leido", leer)
+            except FileNotFoundError:
+                messagebox.showerror("Error", "No esta el archivo")
+                return
+            encontrar = False
+
+            for producto in self.lista_productos_prestamo:
+                if producto in leer:
+                    encontrar = True
+                    break
+            if encontrar:
+                messagebox.showinfo("Encontro", "Inactivo")
             else:
-                messagebox.showinfo("Prestamo" , "Esta Activo")
+                messagebox.showerror("No", "Activo")
 
         self.boton_abrir = tk.Button(self.ventana_product ,text="abrir" ,command=abrir)
         self.boton_abrir.pack()
@@ -80,7 +89,3 @@ class Producto:
     def cantidad(self):
         cantidad_productos = len(self.lista_productos_prestamo)
         messagebox.showinfo("Productos" , f' la cantidad de productos es :{cantidad_productos}')
-
-Producto()
-
-

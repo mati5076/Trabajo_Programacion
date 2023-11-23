@@ -6,31 +6,31 @@ from gestion.funcionario import Funcionario
 
 class usuario_sistema:
     def __init__(self):
-        self.administrador = {'administrador':'123'}
+        self.administrador = {'administrador':'1234'}
         self.gestor_informe= {'gestor' : '321'}
-        self.funcionario = {'funcionario' : '54321'}
+        self.funcionario = {'funcionario' : '12345'}
         
         self.ventana = tk.Tk()
-        self.ventana.geometry("300x200")
+        self.ventana.geometry("400x250")
         self.ventana.title("Login")
-        self.ventana.config(bg='#616161')
+        self.ventana.config(bg='black')
         
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
-        self.label_usuario.config(bg='#616161')
+        self.label_usuario.config(bg='black' ,fg="white")
 
         self.usuario_entrada = tk.Entry()
         self.usuario_entrada.pack()
-        self.usuario_entrada.config(bg='#616161',font=("Arial",12))
+        self.usuario_entrada.config(bg='black',fg='white' ,font=("Calibri",12))
 
         self.label_contrasenia = tk.Label(text="Contraseña:")
         self.label_contrasenia.pack()
-        self.label_contrasenia.config(bg='#616161')
+        self.label_contrasenia.config(bg='black' , fg="white")
 
         self.contrasenia= tk.Entry(show='*')
         self.contrasenia.pack()
         #el font es para poder cambiar el tipo de letra y bg es ponerle color al fondo de la entrada de datos
-        self.contrasenia.config(bg='#616161',font=('Arial',12))
+        self.contrasenia.config(bg='black',fg='white' ,font=('Calibri',12))
 
         def login():
             user = self.usuario_entrada.get()
@@ -42,7 +42,7 @@ class usuario_sistema:
             elif user in self.gestor_informe and password in self.gestor_informe[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
-                Producto()
+                solicitud()
             elif user in self.funcionario and password in self.funcionario[user]:
                 messagebox.showinfo("Inicio" , 'Se inicio sesion')
                 self.ventana.withdraw()
@@ -53,6 +53,6 @@ class usuario_sistema:
                 self.contrasenia.delete(0,tk.END)
         boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         boton_inicio.pack()
-        boton_inicio.config(bg='green',font=('Arial',10))
+        boton_inicio.config(bg='Red',font=('Arial',10))
 
         self.ventana.mainloop()

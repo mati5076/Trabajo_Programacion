@@ -5,6 +5,7 @@ class Funcionario:
     def __init__(self):
         self.ventana_funcionario = tk.Tk()
         self.ventana_funcionario.geometry("400x300")
+        self.ventana_funcionario.title('Funcionario')
         
         self.nomnbre_txt_label = tk.Label(self.ventana_funcionario , text="Nombre txt")
         self.nomnbre_txt_label.pack()

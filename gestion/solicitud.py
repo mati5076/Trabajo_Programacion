@@ -4,6 +4,7 @@ class solicitud:
     def __init__(self):
         self.ventan_solicitante = tk.Tk()
         self.ventan_solicitante.geometry("300x300")
+        self.ventan_solicitante.title("Solicitud")
 
         self.nombre_archivo_label =tk.Label(self.ventan_solicitante , text='INgresa nombre del archivo:')
         self.nombre_archivo_label.pack()

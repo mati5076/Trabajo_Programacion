@@ -3,6 +3,7 @@ from tkinter import messagebox
 from gestion.productos import Producto
 from gestion.solicitud import solicitud
 from gestion.funcionario import Funcionario
+import pymysql
 
 class usuario_sistema:
     def __init__(self):
@@ -14,6 +15,19 @@ class usuario_sistema:
         self.ventana.geometry("600x300")
         self.ventana.title("Login")
         self.ventana.config(bg='#3C3C3C')
+        
+        try:
+            self.connection = pymysql.connect(
+                host= 'localhost',
+                user= 'root',
+                password= '',
+                db= 'gestor_arriendo'
+                )
+
+            self.cursor = self.connection.cursor()
+            print("Conexion correcta")
+        except Exception:
+            raise
         
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
@@ -72,10 +86,29 @@ class usuario_sistema:
                 messagebox.showerror("Error", "El usuario o contraseña esta mal")
                 self.usuario_entrada.delete(0,tk.END)
                 self.contrasenia.delete(0,tk.END)
+        def registro():
+            sql = 'Insert to Usuario() , values()'
+            self.cursor.execute(sql)
+
+            registro_ventana = tk.Toplevel(self.ventana)
+
+            registro_ventana.geometry("600x300")
+            registro_ventana.title("Registro")
+
+            user_registro = tk.Entry(registro_ventana)
+            user_registro.pack()
+
+            password_registro = tk.Entry(registro_ventana,show='*')
+            password_registro.pack(pady=15)
+
         self.boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         self.boton_inicio.pack()
         self.boton_inicio.config(bg='Red',font=('Calibri',10))
-        
+                    
+        self.boton_registro = tk.Button(self.ventana,text='Registro' , command=registro)
+        self.boton_registro.pack()
+        self.boton_registro.config(bg='Red',font=('Calibri',10))
+
         self.boton_cancelacion = tk.Button(self.ventana, text="salir de la app" , command=exit)
         self.boton_cancelacion.pack()
         self.boton_cancelacion.config(bg='Red',font=('Calibri',10))

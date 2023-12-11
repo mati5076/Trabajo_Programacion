@@ -1,17 +1,30 @@
 import tkinter as tk
-from tkinter import messagebox
+import pymysql
 
 class Funcionario:
     def __init__(self):
         self.ventana_funcionario = tk.Tk()
-        self.ventana_funcionario.geometry("400x300")
-        self.ventana_funcionario.title('Funcionario')
+        self.ventana_funcionario.geometry("600x400")
+        self.ventana_funcionario.title('Funcionarios')
+        try:
+            self.connection = pymysql.connect(
+                host= 'localhost',
+                user= 'root',
+                password= '',
+                db= 'gestor_arriendo'
+                )
+
+            self.cursor = self.connection.cursor()
+            print("Conexion correcta")
+
+        except Exception as ex:
+            print(f'Error en la conexion {ex}') 
+
+        self.numero_trabajador_label = tk.Label(self.ventana_funcionario , text="ID")
+        self.numero_trabajador_label.pack()
         
-        self.nomnbre_txt_label = tk.Label(self.ventana_funcionario , text="Nombre txt")
-        self.nomnbre_txt_label.pack()
-        
-        self.nomnbre_txt = tk.Entry(self.ventana_funcionario)
-        self.nomnbre_txt.pack()
+        self.id = tk.Entry(self.ventana_funcionario)
+        self.id.pack()
 
         self.nombre_completo_label = tk.Label(self.ventana_funcionario, text="Nombre completo:")
         self.nombre_completo_label.pack()
@@ -19,6 +32,12 @@ class Funcionario:
         self.nombre_completo = tk.Entry(self.ventana_funcionario)
         self.nombre_completo.pack()
         
+        self.contraseniaa_label = tk.Label(self.ventana_funcionario, text="Contraseña:")
+        self.contraseniaa_label.pack()
+
+        self.contraseniaa = tk.Entry(self.ventana_funcionario,show='*')
+        self.contraseniaa.pack()
+
         self.run_label = tk.Label(self.ventana_funcionario , text="Run:")
         self.run_label.pack()
         
@@ -46,24 +65,30 @@ class Funcionario:
         
         self.contrato = tk.OptionMenu(self.ventana_funcionario,self.tipo,*opcion_contrato)
         self.contrato.pack()
-   
-        #en esta funcion crea y guarda al momento un archivo con la extension txt
-        def guardar_txt():
-            archivo =  self.nomnbre_txt.get()
-            nombre_empleado = self.nombre_completo.get()
-            rut = self.run.get()
-            cargo = self.cargo.get()
-            empresa = self.empresa.get()
-            contrato = self.tipo.get()
-            #permite que en el codigo  se cree un txt y escribiendo en el de manera inmediata
-            with open(f'{archivo}.txt' , 'w') as arch:
-                arch.write(f"Nombre Completo empleado : {nombre_empleado}")
-                arch.write(f"\nRut : {rut}")
-                arch.write(f'\nCargo : {cargo}')
-                arch.write(f"\nEmpresa : {empresa}")
-                arch.write(f"\nContrato : {contrato}")
-                 #boton que ejecuta la funcion de guardar el txt
-        self.boton_archivo = tk.Button(self.ventana_funcionario , text="Guarda datos" , command=guardar_txt)
-        self.boton_archivo.pack()
+        
+        self.boton = tk.Button(self.ventana_funcionario,text="Crear cuenta",command=self.insertar_trabajadores)
+        self.boton.pack()
         
         self.ventana_funcionario.mainloop()
+        self.cerrar_base()
+    
+    def insertar_trabajadores(self):
+
+        id_usuario = int(self.id.get())
+        nombre_user = self.nombre_completo.get()
+        contrasenia_user = self.contraseniaa.get()
+        rut_user = self.run.get()
+        cargo_user = self.cargo.get()
+        empresa_user = self.empresa.get()
+        contrato_user = self.tipo.get()
+
+        sql = 'INSERT INTO usuario (id_usuario, nombre_usuario, contrasenia, rut, cargo, empresa, contrato) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+
+        try:
+            self.cursor.execute(sql, (id_usuario, nombre_user, contrasenia_user, rut_user, cargo_user, empresa_user, contrato_user))
+            self.connection.commit()
+            print("Se ingresó con éxito")
+        except Exception as e:
+            print(f"Error al insertar el valor: {e}")
+            #evita los cambios a la base de datos
+            self.connection.rollback()

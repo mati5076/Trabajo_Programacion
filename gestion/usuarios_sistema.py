@@ -3,14 +3,11 @@ from tkinter import messagebox
 from gestion.productos import Producto
 from gestion.solicitud import solicitud
 from gestion.funcionario import Funcionario
+from gestion.grafico import grafico
 import pymysql
 
 class usuario_sistema:
     def __init__(self):
-        self.administrador = {'205885501':'1234'}
-        self.gestor_informe= {'gestor' : '1234'}
-        self.funcionario = {'funcionario' : '1234'}
-        
         self.ventana = tk.Tk()
         self.ventana.geometry("600x300")
         self.ventana.title("Login")
@@ -26,9 +23,10 @@ class usuario_sistema:
 
             self.cursor = self.connection.cursor()
             print("Conexion correcta")
-        except Exception:
-            raise
-        
+
+        except Exception as ex:
+            print(f'Error en la conexion', ex)
+            
         self.label_usuario = tk.Label(text="Usuario:")
         self.label_usuario.pack()
         self.label_usuario.config(bg='#3C3C3C' ,fg="white")
@@ -54,52 +52,53 @@ class usuario_sistema:
             self.venta_seleccion.geometry("600x300")
 
             boton_productos = tk.Button(self.venta_seleccion, text='Ver Productos', command=Producto)
-            boton_productos.pack(pady=5)
+            boton_productos.pack(pady=10)
 
             boton_solicitud = tk.Button(self.venta_seleccion, text='Ver Solicitudes', command=solicitud)
-            boton_solicitud.pack(pady=10)
+            boton_solicitud.pack(pady=20)
 
-            boton_funcionario = tk.Button(self.venta_seleccion, text='Ver Funcionario', command=Funcionario)
-            boton_funcionario.pack(pady=15)
+            boton_grafico =  tk.Button(self.venta_seleccion, text="Grafico",command=grafico)
+            boton_grafico.pack()
+
+            self.boton_contrasenia_nueva = tk.Button(self.venta_seleccion,text="cambiar contraseña" , command=self.cambio_contrasenia_ventana)
+            self.boton_contrasenia_nueva.pack()
 
             boton_cancelar = tk.Button(self.venta_seleccion, text="salir de la sesion" , command=exit)
-            boton_cancelar.pack(pady=20)
+            boton_cancelar.pack(pady=30)
+        
+        def validacion():
+            rut = self.usuario_entrada.get()
+            nombre = self.usuario_entrada.get()
+            password = self.contrasenia.get()
+
+            try:
+                sql = 'SELECT * FROM usuario WHERE (nombre_usuario = %s OR rut = %s) AND contrasenia = %s'
+                self.cursor.execute(sql, (nombre, rut, password))
+                validar = self.cursor.fetchone()
+
+                if validar:
+                    return True
+                else:
+                    return False
+
+            except Exception as ex:
+                print(f"Error : {ex}")
+
+        def registro():
+            Funcionario()
+
         def login():
             user = self.usuario_entrada.get()
             password = self.contrasenia.get()
-            if user in self.administrador and password in self.administrador[user]:
-                messagebox.showinfo("Inicio" , 'Se inicio sesion')
-                self.usuario_entrada.delete(0,tk.END)
-                self.contrasenia.delete(0,tk.END)
+            if not validacion():
+                messagebox.showerror("Error", "El usuario o contraseña es incorrecto")
+                self.usuario_entrada.delete(0, tk.END)
+                self.contrasenia.delete(0, tk.END)
+            if validacion():
+                messagebox.showinfo("Inicio", f'Se inicio sesion como {user}')
+                self.usuario_entrada.delete(0, tk.END)
+                self.contrasenia.delete(0, tk.END)
                 ventana_seleccion_accion()
-            elif user in self.gestor_informe and password in self.gestor_informe[user]:
-                messagebox.showinfo("Inicio" , 'Se( inicio sesion')
-                self.usuario_entrada.delete(0,tk.END)
-                self.contrasenia.delete(0,tk.END)
-                ventana_seleccion_accion()
-            elif user in self.funcionario and password in self.funcionario[user]:
-                messagebox.showinfo("Inicio" , 'Se inicio sesion')
-                self.usuario_entrada.delete(0,tk.END)
-                self.contrasenia.delete(0,tk.END)
-                ventana_seleccion_accion()
-            else:
-                messagebox.showerror("Error", "El usuario o contraseña esta mal")
-                self.usuario_entrada.delete(0,tk.END)
-                self.contrasenia.delete(0,tk.END)
-        def registro():
-            sql = 'Insert to Usuario() , values()'
-            self.cursor.execute(sql)
-
-            registro_ventana = tk.Toplevel(self.ventana)
-
-            registro_ventana.geometry("600x300")
-            registro_ventana.title("Registro")
-
-            user_registro = tk.Entry(registro_ventana)
-            user_registro.pack()
-
-            password_registro = tk.Entry(registro_ventana,show='*')
-            password_registro.pack(pady=15)
 
         self.boton_inicio = tk.Button(self.ventana,text='iniciar sesion' , command=login)
         self.boton_inicio.pack()
@@ -112,5 +111,36 @@ class usuario_sistema:
         self.boton_cancelacion = tk.Button(self.ventana, text="salir de la app" , command=exit)
         self.boton_cancelacion.pack()
         self.boton_cancelacion.config(bg='Red',font=('Calibri',10))
-
+        
         self.ventana.mainloop()
+        self.cerrar_base_datos()
+    def cambio_contrasenia_ventana(self):
+        self.ventana_contrasenia = tk.Toplevel(self.ventana)
+        
+        self.usuario_entrada_n = tk.Entry(self.ventana_contrasenia)
+        self.usuario_entrada_n.pack()
+
+        self.label_contrasenia = tk.Label(self.ventana_contrasenia,text="Contraseña:")
+        self.label_contrasenia.pack()
+
+        self.contrasenia_n= tk.Entry(self.ventana_contrasenia,show='*')
+        self.contrasenia_n.pack()
+
+        self.boton_cambio = tk.Button(self.ventana_contrasenia , text="Cambia contraseña" , command=self.cambio_contrasenia)
+        self.boton_cambio.pack()
+
+    def cambio_contrasenia(self):
+        contrasenia_user = self.contrasenia_n.get()
+        nombre_user = self.usuario_entrada_n.get()
+        sql = 'UPDATE  usuario SET contrasenia = %s WHERE nombre_usuario = %s'
+        try:
+            self.cursor.execute(sql,(contrasenia_user,nombre_user))
+            messagebox.showinfo("Exito","Se cambio la contraseña con exito")
+            self.connection.commit()
+        except Exception as e:
+            print("Error" ,e)
+            self.connection.rollback()
+        
+    def cerrar_base_datos(self):
+        self.connection.close()
+        print("se cerro conexion con exito")
